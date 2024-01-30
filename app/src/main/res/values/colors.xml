@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="negro_KeyStore">#141114</color>
+    <color name="azul_oscuro_KeyStore">#083B4F</color>
+    <color name="azul_KeyStore">#2C7797</color>
+    <color name="azul_apagado_KeyStore">#B2CBD2</color>
+    <color name="azul_claro_KeyStore">#EDF7FF</color>
+    <color name="blanco_KeyStore">#FAFAFA</color>
+    <color name="afirmativo_KeyStore">#21ba45</color>
+    <color name="negativo_KeyStore">#c10015</color>
+</resources>

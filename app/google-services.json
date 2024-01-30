@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "91763470176",
+    "project_id": "keystore-79914",
+    "storage_bucket": "keystore-79914.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91763470176:android:f7a4df0f639efdba93b805",
+        "android_client_info": {
+          "package_name": "com.example.keystore_hugolopezfernandez"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1tY9FfDP5R5ciabiaTntwtLF3Nrewar0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
