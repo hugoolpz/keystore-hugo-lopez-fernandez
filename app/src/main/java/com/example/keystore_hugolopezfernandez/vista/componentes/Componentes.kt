@@ -541,7 +541,8 @@ fun MiniTarjetaFuncionDato(alClickar: () -> Unit, icono: ImageVector, textoTarje
 fun DialogoModalMasKeyStore(
     alCerrar: () -> Unit,
     estadoDialogo: SheetState,
-    funcionTarjeta4: () -> Unit
+    funcionTarjeta1: () -> Unit,
+    funcionTarjeta2: () -> Unit
 ) {
     ModalBottomSheet(
         onDismissRequest = alCerrar,
@@ -584,7 +585,8 @@ fun DialogoModalMasKeyStore(
                         ),
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 5.dp
-                        )
+                        ),
+                        onClick = funcionTarjeta1
                     ) {
                         Text(
                             text = "Mover a carpeta",
@@ -609,7 +611,8 @@ fun DialogoModalMasKeyStore(
                         ),
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 5.dp
-                        )
+                        ),
+                        onClick = funcionTarjeta2
                     ) {
                         Text(
                             text = "Eliminar",

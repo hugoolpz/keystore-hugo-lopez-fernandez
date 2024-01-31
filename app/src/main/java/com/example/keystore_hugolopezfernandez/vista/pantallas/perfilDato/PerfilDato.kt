@@ -45,6 +45,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,6 +67,8 @@ import com.example.keystore_hugolopezfernandez.viewmodel.PerfilDatoVM
 import com.example.keystore_hugolopezfernandez.vista.componentes.DialogoModalMasKeyStore
 import com.example.keystore_hugolopezfernandez.vista.componentes.MiniTarjetaFuncionDato
 import com.example.keystore_hugolopezfernandez.vista.componentes.TarjetaDatosKeyStore
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +77,8 @@ fun PerfilDato(navController: NavController, viewModel: PerfilDatoVM, id: String
     var tarjetaAbierta by remember { mutableStateOf(false) }
     val dialogoModal = rememberModalBottomSheetState()
     val cargando : Boolean by viewModel.cargando.observeAsState(initial = false)
-    val datoPrivado: DatosPrivados by viewModel.datoPrivado.observeAsState(DatosPrivados("", "", "", emptyList(), ""))
+    val datoPrivado: DatosPrivados by viewModel.datoPrivado.observeAsState(DatosPrivados("", "", emptyList(), ""))
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.getDatoPrivado(id, uid)
@@ -113,7 +117,12 @@ fun PerfilDato(navController: NavController, viewModel: PerfilDatoVM, id: String
             DialogoModalMasKeyStore(
                 alCerrar = { tarjetaAbierta = false },
                 estadoDialogo = dialogoModal,
-                funcionTarjeta4 = {})
+                funcionTarjeta1 = {},
+                funcionTarjeta2 = {
+                    scope.launch {
+                        viewModel.deleteDatoPrivado(id, uid, navController)
+                    }
+                })
         }
 
         Scaffold(
@@ -132,7 +141,7 @@ fun PerfilDato(navController: NavController, viewModel: PerfilDatoVM, id: String
                         )
                     },
                     actions = {
-                        IconButton(onClick = {}) {
+                        IconButton(onClick = {navController.navigate(Vistas.CrearContra.ruta + "?id=" + id + "&uid=" + uid)}) {
                             Icon(
                                 imageVector = Icons.Rounded.Edit,
                                 contentDescription = "editar",
@@ -142,7 +151,7 @@ fun PerfilDato(navController: NavController, viewModel: PerfilDatoVM, id: String
                         }
                     },
                     navigationIcon = {
-                        IconButton(onClick = { navController.navigate(Vistas.Coleccion.ruta + "/" + uid) }) {
+                        IconButton(onClick = { navController.navigate(Vistas.Coleccion.ruta + "?uid=" + uid) }) {
                             Icon(
                                 imageVector = Icons.Rounded.ArrowBack,
                                 contentDescription = "atras",

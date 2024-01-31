@@ -9,7 +9,7 @@ import androidx.navigation.navArgument
 import com.example.keystore_hugolopezfernandez.viewmodel.ColeccionVM
 import com.example.keystore_hugolopezfernandez.viewmodel.CrearContraVM
 import com.example.keystore_hugolopezfernandez.vista.pantallas.coleccion.Coleccion
-import com.example.keystore_hugolopezfernandez.vista.pantallas.crearDato.CrearDato
+import com.example.keystore_hugolopezfernandez.vista.pantallas.crearDato.CrearContra
 import com.example.keystore_hugolopezfernandez.vista.pantallas.inicio.Inicio
 import com.example.keystore_hugolopezfernandez.viewmodel.InicioVM
 import com.example.keystore_hugolopezfernandez.viewmodel.PerfilDatoVM
@@ -18,9 +18,9 @@ import com.example.keystore_hugolopezfernandez.vista.pantallas.perfilDato.Perfil
 import com.example.keystore_hugolopezfernandez.vista.pantallas.registro.Registro
 
 @Composable
-fun SistemaNav(){
+fun SistemaNav() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Vistas.CrearDato.ruta){
+    NavHost(navController = navController, startDestination = Vistas.Inicio.ruta) {
         composable("${Vistas.Inicio.ruta}") {
             Inicio(
                 navController = navController,
@@ -34,7 +34,7 @@ fun SistemaNav(){
             )
         }
         composable(
-            route = "${Vistas.Coleccion.ruta}/{uid}",
+            route = "${Vistas.Coleccion.ruta}?uid={uid}",
             arguments = listOf(navArgument(name = "uid") {
                 type = NavType.StringType
             })
@@ -48,26 +48,47 @@ fun SistemaNav(){
                     )
                 }
         }
-        composable("${Vistas.CrearDato.ruta}") {
-            CrearDato(
+        composable(
+            route = "${Vistas.CrearContra.ruta}?id={id}&uid={uid}",
+            arguments = listOf(
+                navArgument(name = "id") {
+                    nullable = true
+                    defaultValue = null
+                    type = NavType.StringType
+                },
+                navArgument(name = "uid") {
+                    type = NavType.StringType
+                })
+        ) { navBackStackEntry ->
+            val id: String = navBackStackEntry.arguments?.getString("id") ?: ""
+            val uid = navBackStackEntry.arguments?.getString("uid") ?: ""
+
+            CrearContra(
                 navController = navController,
-                viewModel = CrearContraVM()
+                viewModel = CrearContraVM(),
+                id = id,
+                uid = uid
             )
         }
         composable(
-            route = "${Vistas.PerfilDato.ruta}/{id}/{uid}",
+            route = "${Vistas.PerfilDato.ruta}?id={id}&uid={uid}",
             arguments = listOf(navArgument(name = "id") {
                 type = NavType.StringType
             }, navArgument(name = "uid") {
                 type = NavType.StringType
             })
-        ) {navBackStackEntry->
+        ) { navBackStackEntry ->
             val id = navBackStackEntry.arguments?.getString("id")
             val uid = navBackStackEntry.arguments?.getString("uid")
 
             id?.let { valorId ->
                 uid?.let { valorUid ->
-                    PerfilDato(navController = navController, viewModel = PerfilDatoVM(), id = valorId, uid = valorUid)
+                    PerfilDato(
+                        navController = navController,
+                        viewModel = PerfilDatoVM(),
+                        id = valorId,
+                        uid = valorUid
+                    )
                 }
             }
         }

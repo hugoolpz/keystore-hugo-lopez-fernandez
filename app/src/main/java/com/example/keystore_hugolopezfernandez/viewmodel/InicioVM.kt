@@ -45,7 +45,7 @@ class InicioVM: ViewModel() {
             try {
                 auth.signInWithEmailAndPassword(correo, contra)
                     .addOnSuccessListener {
-                        navController.navigate(Vistas.Coleccion.ruta + "/" + auth.currentUser?.uid)
+                        navController.navigate(Vistas.Coleccion.ruta + "?uid=" + auth.currentUser?.uid)
                         _cargando.value = false
                     }
                     .addOnFailureListener {

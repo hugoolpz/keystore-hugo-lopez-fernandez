@@ -39,9 +39,4 @@ class ColeccionVM: ViewModel() {
         }
         _cargando.value = false
     }
-
-    fun verDato(navController: NavController, id: String, uid: String){
-        _cargando.value = true
-        navController.navigate(Vistas.PerfilDato.ruta + "/" + id + "/" + uid)
-    }
 }

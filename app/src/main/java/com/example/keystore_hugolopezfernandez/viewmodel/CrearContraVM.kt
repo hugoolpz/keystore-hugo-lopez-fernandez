@@ -1,12 +1,21 @@
 package com.example.keystore_hugolopezfernandez.viewmodel
 
-import android.util.Patterns
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.keystore_hugolopezfernandez.modelo.ItemsDatos
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.example.keystore_hugolopezfernandez.modelo.DatosPrivados
+import com.example.keystore_hugolopezfernandez.modelo.RespuestaApi
+import com.example.keystore_hugolopezfernandez.navegacion.Vistas
+import com.example.keystore_hugolopezfernandez.retrofit.InstanciaRetrofit.RetrofitInstance.api
+import kotlinx.coroutines.launch
 
 class CrearContraVM : ViewModel() {
+    private val _datoPrivado = MutableLiveData<DatosPrivados>()
+    val datoPrivado: LiveData<DatosPrivados> = _datoPrivado
+
     private val _titulo = MutableLiveData<String>()
     val titulo: LiveData<String> = _titulo
 
@@ -56,4 +65,70 @@ class CrearContraVM : ViewModel() {
         contenidoItem2: String,
         contenidoItem3: String
     ): Boolean = contenidoItem1.isNotEmpty() && contenidoItem2.isNotEmpty() && contenidoItem3.isNotEmpty()
+
+    suspend fun getDatoPrivado(id: String, uid: String) {
+        _cargando.value = true
+        try {
+            val result = api.getDatoPrivado(id, uid)
+            if (result.isSuccessful) {
+                val response: RespuestaApi<DatosPrivados> = result.body()!!
+                if (response.exito == true){
+                    _datoPrivado.value = response.datos!!
+                    RellenarCampos()
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("ViewModel", "Error en getDatoPrivado()", e)
+            // Maneja los errores aquí
+        }
+        _cargando.value = false
+    }
+
+    fun RellenarCampos(){
+        _titulo.value = _datoPrivado.value?.titulo
+        _nota.value = _datoPrivado.value?.nota
+        _contenidoItem1.value = _datoPrivado.value?.items?.get(0)?.contenido
+        _contenidoItem2.value = _datoPrivado.value?.items?.get(1)?.contenido
+        _contenidoItem3.value = _datoPrivado.value?.items?.get(2)?.contenido
+    }
+
+    suspend fun postDatoPrivado(navController: NavController, uid: String, datosPrivados: DatosPrivados) {
+        _cargando.value = true
+        try {
+            val result = api.postDatoPrivado(datosPrivados)
+            if (result.isSuccessful) {
+                val response: RespuestaApi<DatosPrivados> = result.body()!!
+                if (response.exito == true){
+                    Log.e("ViewModel", "postDatosPrivados() con éxito, resultado: $result")
+                    navController.navigate(Vistas.Coleccion.ruta + "?uid=" + uid)
+                } else {
+                    navController.navigate(Vistas.CrearContra.ruta + "?uid=" + uid)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("ViewModel", "Error en postDatosPrivados()", e)
+            // Maneja los errores aquí
+        }
+        _cargando.value = false
+    }
+
+    suspend fun putDatoPrivado(navController: NavController, id: String, uid: String, datosPrivados: DatosPrivados) {
+        _cargando.value = true
+        try {
+            val result = api.putDatoPrivado(id, datosPrivados)
+            if (result.isSuccessful) {
+                val response: RespuestaApi<DatosPrivados> = result.body()!!
+                if (response.exito == true){
+                    Log.e("ViewModel", "putDatosPrivados() con éxito, resultado: $result")
+                    navController.navigate(Vistas.Coleccion.ruta + "?uid=" + uid)
+                } else {
+                    navController.navigate(Vistas.CrearContra.ruta + "?id=" + id + "&uid=" + uid)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("ViewModel", "Error en putDatosPrivados()", e)
+            // Maneja los errores aquí
+        }
+        _cargando.value = false
+    }
 }

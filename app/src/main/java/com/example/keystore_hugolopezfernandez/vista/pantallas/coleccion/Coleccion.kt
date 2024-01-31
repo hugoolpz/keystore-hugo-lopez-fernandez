@@ -113,8 +113,6 @@ fun Coleccion(navController: NavController, viewModel: ColeccionVM, uid: String)
             }
         }
     } else {
-        Log.d("datosPrivados", datosPrivados.toString())
-
         if (dialogoAbiertoCarpeta) {
             tarjetaAbierta = false
             DialogoCreacionCarpetaKeyStore(
@@ -133,7 +131,7 @@ fun Coleccion(navController: NavController, viewModel: ColeccionVM, uid: String)
                 estadoDialogo = dialogoModal,
                 funcionTarjeta1 = {
                     navController.navigate(
-                        Vistas.CrearDato.ruta
+                        Vistas.CrearContra.ruta + "?uid=" + uid
                     )
                 },
                 funcionTarjeta4 = { dialogoAbiertoCarpeta = true })
@@ -279,7 +277,7 @@ fun Coleccion(navController: NavController, viewModel: ColeccionVM, uid: String)
                             }
                             items(datosPrivados.size) { indice ->
                                 TarjetaDatosKeyStore(datosPrivados[indice].titulo, datosPrivados[indice].nota, funcionTarjeta = {
-                                    viewModel.verDato(navController, datosPrivados[indice]._id, uid)
+                                    navController.navigate(Vistas.PerfilDato.ruta + "?id=" + datosPrivados[indice]._id + "&uid=" + uid)
                                 })
                             }
                         })
