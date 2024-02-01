@@ -10,6 +10,7 @@ import com.example.keystore_hugolopezfernandez.modelo.DatosPrivados
 import com.example.keystore_hugolopezfernandez.modelo.RespuestaApi
 import com.example.keystore_hugolopezfernandez.navegacion.Vistas
 import com.example.keystore_hugolopezfernandez.retrofit.InstanciaRetrofit.RetrofitInstance.api
+import com.toxicbakery.bcrypt.Bcrypt
 import kotlinx.coroutines.launch
 
 class CrearContraVM : ViewModel() {
@@ -90,6 +91,11 @@ class CrearContraVM : ViewModel() {
         _contenidoItem1.value = _datoPrivado.value?.items?.get(0)?.contenido
         _contenidoItem2.value = _datoPrivado.value?.items?.get(1)?.contenido
         _contenidoItem3.value = _datoPrivado.value?.items?.get(2)?.contenido
+    }
+
+    fun GenerarPasswordRandom(pass: String){
+        val hash = Bcrypt.hash(pass, 12)
+        _contenidoItem2.value = hash.toString()
     }
 
     suspend fun postDatoPrivado(navController: NavController, uid: String, datosPrivados: DatosPrivados) {

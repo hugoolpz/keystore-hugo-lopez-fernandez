@@ -247,6 +247,8 @@ fun DialogoModalCreacionKeyStore(
     alCerrar: () -> Unit,
     estadoDialogo: SheetState,
     funcionTarjeta1: () -> Unit,
+    funcionTarjeta2: () -> Unit,
+    funcionTarjeta3: () -> Unit,
     funcionTarjeta4: () -> Unit
 ) {
     ModalBottomSheet(
@@ -341,7 +343,8 @@ fun DialogoModalCreacionKeyStore(
                         ),
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 5.dp
-                        )
+                        ),
+                        onClick = funcionTarjeta3
                     ) {
                         Text(
                             text = "Tarjeta de crédito",

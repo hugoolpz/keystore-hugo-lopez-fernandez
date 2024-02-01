@@ -141,7 +141,13 @@ fun PerfilDato(navController: NavController, viewModel: PerfilDatoVM, id: String
                         )
                     },
                     actions = {
-                        IconButton(onClick = {navController.navigate(Vistas.CrearContra.ruta + "?id=" + id + "&uid=" + uid)}) {
+                        IconButton(onClick = {
+                            if (datoPrivado.items.size in 2..3) {
+                                navController.navigate(Vistas.CrearContra.ruta + "?id=" + id + "&uid=" + uid)
+                            } else if (datoPrivado.items.size > 3){
+                                navController.navigate(Vistas.CrearTarjeta.ruta + "?id=" + id + "&uid=" + uid)
+                            }
+                        }) {
                             Icon(
                                 imageVector = Icons.Rounded.Edit,
                                 contentDescription = "editar",

@@ -5,5 +5,6 @@ sealed class Vistas(val ruta: String) {
     object Registro: Vistas("Registro");
     object Coleccion: Vistas("Coleccion");
     object CrearContra: Vistas("CrearContra");
+    object CrearTarjeta: Vistas("CrearTarjeta");
     object PerfilDato: Vistas("PerfilDato");
 }

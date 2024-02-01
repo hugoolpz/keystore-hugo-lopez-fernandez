@@ -56,9 +56,8 @@ android {
 dependencies {
     val nav_version = "2.5.3"
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
-    // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    // Retrofit with Scalar Converter
+    implementation("com.ToxicBakery.library.bcrypt:bcrypt:1.0.9")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("androidx.navigation:navigation-compose:$nav_version")

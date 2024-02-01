@@ -134,6 +134,10 @@ fun Coleccion(navController: NavController, viewModel: ColeccionVM, uid: String)
                         Vistas.CrearContra.ruta + "?uid=" + uid
                     )
                 },
+                funcionTarjeta2 = {},
+                funcionTarjeta3 = {navController.navigate(
+                    Vistas.CrearTarjeta.ruta + "?uid=" + uid
+                )},
                 funcionTarjeta4 = { dialogoAbiertoCarpeta = true })
         }
 

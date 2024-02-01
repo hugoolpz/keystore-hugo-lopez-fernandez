@@ -45,6 +45,7 @@ class InicioVM: ViewModel() {
             try {
                 auth.signInWithEmailAndPassword(correo, contra)
                     .addOnSuccessListener {
+                        auth.currentUser?.let { it1 -> Log.d("Id", it1.uid) }
                         navController.navigate(Vistas.Coleccion.ruta + "?uid=" + auth.currentUser?.uid)
                         _cargando.value = false
                     }
