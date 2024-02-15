@@ -108,7 +108,7 @@ fun Registro(navController: NavController, viewModel: RegistroVM){
                             style = MaterialTheme.typography.headlineLarge,
                             fontFamily = FontFamily.Serif,
                             color = colorResource(id = R.color.negro_KeyStore),
-                            modifier = Modifier.padding(8.dp, 5.dp, 8.dp, 5.dp).fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth().padding(8.dp, 5.dp, 8.dp, 5.dp).fillMaxWidth()
                         )
                         Text(
                             text = "Regístrate:",

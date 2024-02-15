@@ -190,6 +190,7 @@ fun BarraBusquedaKeyStore(
 fun TarjetaDatosKeyStore(
     tituloDato: String,
     notaDato: String,
+    icono: ImageVector = Icons.Rounded.Info,
     funcionTarjeta: () -> Unit
 ) {
     Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
@@ -215,7 +216,7 @@ fun TarjetaDatosKeyStore(
             ) {
                 Column {
                     Icon(
-                        imageVector = Icons.Rounded.Info,
+                        imageVector = icono,
                         contentDescription = "foto_perfil",
                         tint = colorResource(id = R.color.azul_KeyStore),
                         modifier = Modifier.size(40.dp)
@@ -247,9 +248,7 @@ fun DialogoModalCreacionKeyStore(
     alCerrar: () -> Unit,
     estadoDialogo: SheetState,
     funcionTarjeta1: () -> Unit,
-    funcionTarjeta2: () -> Unit,
     funcionTarjeta3: () -> Unit,
-    funcionTarjeta4: () -> Unit
 ) {
     ModalBottomSheet(
         onDismissRequest = alCerrar,
@@ -260,7 +259,7 @@ fun DialogoModalCreacionKeyStore(
     {
         LazyColumn(modifier = Modifier
             .fillMaxWidth()
-            .height(330.dp)
+            .height(230.dp)
             .padding(start = 10.dp, end = 10.dp),
             verticalArrangement = spacedBy(15.dp),
             content = {
@@ -318,62 +317,11 @@ fun DialogoModalCreacionKeyStore(
                         ),
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 5.dp
-                        )
-                    ) {
-                        Text(
-                            text = "Nota segura",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .padding(10.dp)
-                                .fillMaxWidth()
-                        )
-                    }
-                }
-                item {
-                    ElevatedCard(
-                        modifier = Modifier.border(
-                            1.dp,
-                            colorResource(id = R.color.azul_KeyStore),
-                            CardDefaults.elevatedShape
-                        ),
-                        colors = CardDefaults.cardColors(
-                            containerColor = colorResource(id = R.color.blanco_KeyStore),
-                        ),
-                        elevation = CardDefaults.cardElevation(
-                            defaultElevation = 5.dp
                         ),
                         onClick = funcionTarjeta3
                     ) {
                         Text(
                             text = "Tarjeta de crédito",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .padding(10.dp)
-                                .fillMaxWidth()
-                        )
-                    }
-                }
-                item {
-                    ElevatedCard(
-                        onClick = funcionTarjeta4,
-                        modifier = Modifier.border(
-                            1.dp,
-                            colorResource(id = R.color.azul_KeyStore),
-                            CardDefaults.elevatedShape
-                        ),
-                        colors = CardDefaults.cardColors(
-                            containerColor = colorResource(id = R.color.blanco_KeyStore),
-                        ),
-                        elevation = CardDefaults.cardElevation(
-                            defaultElevation = 5.dp
-                        )
-                    ) {
-                        Text(
-                            text = "Carpeta",
                             fontWeight = FontWeight.Bold,
                             fontSize = 20.sp,
                             textAlign = TextAlign.Center,
@@ -437,9 +385,7 @@ fun ItemMenuIzqKeyStore(
 }
 
 @Composable
-fun DialogoCreacionCarpetaKeyStore(
-    valor: String,
-    alCambiarValor: (String) -> Unit,
+fun DialogoEliminacionKeyStore(
     modifier: Modifier,
     alRechazar: () -> Unit,
     alConfirmar: () -> Unit,
@@ -456,23 +402,13 @@ fun DialogoCreacionCarpetaKeyStore(
                 )
             }
         },
-        text = {
-            InputDelineadoKeystore(
-                valor = valor,
-                alCambiarValor = alCambiarValor,
-                modifier = modifier,
-                etiqueta = { Text(text = "Nombre de la carpeta") },
-                placeholder = { Text(text = "Un nombre...") },
-                esContra = false
-            )
-        },
         onDismissRequest = {
             alRechazar()
         },
         confirmButton = {
             FilledTonalButton(
                 onClick = alConfirmar,
-                modifier = Modifier.width(140.dp),
+                modifier = Modifier.width(80.dp),
                 enabled = true,
                 colors = ButtonDefaults.filledTonalButtonColors(
                     containerColor = colorResource(id = R.color.afirmativo_KeyStore),
@@ -482,14 +418,14 @@ fun DialogoCreacionCarpetaKeyStore(
             )
             {
                 Text(
-                    text = "Crear carpeta",
+                    text = "Sí",
                 )
             }
         },
         dismissButton = {
             FilledTonalButton(
                 onClick = alRechazar,
-                modifier = Modifier.width(110.dp),
+                modifier = Modifier.width(80.dp),
                 enabled = true,
                 colors = ButtonDefaults.filledTonalButtonColors(
                     containerColor = colorResource(id = R.color.negativo_KeyStore),
@@ -499,7 +435,7 @@ fun DialogoCreacionCarpetaKeyStore(
             )
             {
                 Text(
-                    text = "Cancelar",
+                    text = "No",
                 )
             }
         },
@@ -556,7 +492,7 @@ fun DialogoModalMasKeyStore(
     {
         LazyColumn(modifier = Modifier
             .fillMaxWidth()
-            .height(220.dp)
+            .height(180.dp)
             .padding(start = 10.dp, end = 10.dp),
             verticalArrangement = spacedBy(15.dp),
             content = {
@@ -575,32 +511,6 @@ fun DialogoModalMasKeyStore(
                             )
                         }
                     )
-                }
-                item {
-                    ElevatedCard(
-                        modifier = Modifier.border(
-                            1.dp,
-                            colorResource(id = R.color.azul_KeyStore),
-                            CardDefaults.elevatedShape
-                        ),
-                        colors = CardDefaults.cardColors(
-                            containerColor = colorResource(id = R.color.blanco_KeyStore),
-                        ),
-                        elevation = CardDefaults.cardElevation(
-                            defaultElevation = 5.dp
-                        ),
-                        onClick = funcionTarjeta1
-                    ) {
-                        Text(
-                            text = "Mover a carpeta",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .padding(10.dp)
-                                .fillMaxWidth()
-                        )
-                    }
                 }
                 item {
                     ElevatedCard(

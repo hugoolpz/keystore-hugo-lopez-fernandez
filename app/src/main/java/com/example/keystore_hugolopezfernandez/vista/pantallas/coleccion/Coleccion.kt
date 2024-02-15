@@ -62,7 +62,6 @@ import com.example.keystore_hugolopezfernandez.modelo.DatosPrivados
 import com.example.keystore_hugolopezfernandez.navegacion.Vistas
 import com.example.keystore_hugolopezfernandez.viewmodel.ColeccionVM
 import com.example.keystore_hugolopezfernandez.vista.componentes.BarraBusquedaKeyStore
-import com.example.keystore_hugolopezfernandez.vista.componentes.DialogoCreacionCarpetaKeyStore
 import com.example.keystore_hugolopezfernandez.vista.componentes.DialogoModalCreacionKeyStore
 import com.example.keystore_hugolopezfernandez.vista.componentes.ItemMenuIzqKeyStore
 import com.example.keystore_hugolopezfernandez.vista.componentes.TarjetaDatosKeyStore
@@ -73,7 +72,6 @@ import kotlinx.coroutines.launch
 fun Coleccion(navController: NavController, viewModel: ColeccionVM, uid: String) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     var tarjetaAbierta by remember { mutableStateOf(false) }
-    var dialogoAbiertoCarpeta by remember { mutableStateOf(false) }
     val dialogoModal = rememberModalBottomSheetState()
     val estadoMenu = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -113,17 +111,6 @@ fun Coleccion(navController: NavController, viewModel: ColeccionVM, uid: String)
             }
         }
     } else {
-        if (dialogoAbiertoCarpeta) {
-            tarjetaAbierta = false
-            DialogoCreacionCarpetaKeyStore(
-                valor = "",
-                alCambiarValor = {},
-                modifier = Modifier.fillMaxWidth(),
-                alRechazar = { dialogoAbiertoCarpeta = false },
-                alConfirmar = { dialogoAbiertoCarpeta = false },
-                tituloDialogo = "Crea una nueva carpeta:"
-            )
-        }
 
         if (tarjetaAbierta) {
             DialogoModalCreacionKeyStore(
@@ -134,11 +121,10 @@ fun Coleccion(navController: NavController, viewModel: ColeccionVM, uid: String)
                         Vistas.CrearContra.ruta + "?uid=" + uid
                     )
                 },
-                funcionTarjeta2 = {},
                 funcionTarjeta3 = {navController.navigate(
                     Vistas.CrearTarjeta.ruta + "?uid=" + uid
                 )},
-                funcionTarjeta4 = { dialogoAbiertoCarpeta = true })
+            )
         }
 
         ModalNavigationDrawer(
@@ -179,7 +165,7 @@ fun Coleccion(navController: NavController, viewModel: ColeccionVM, uid: String)
                                     icono = Icons.Rounded.Settings,
                                     textoItem = "Configurar tu perfil",
                                     false,
-                                    funcionItem = { })
+                                    funcionItem = { navController.navigate(Vistas.ConfiguracionPerfil.ruta + "?uid=" + uid) })
                             }
                             item {
                                 ItemMenuIzqKeyStore(
@@ -256,29 +242,6 @@ fun Coleccion(navController: NavController, viewModel: ColeccionVM, uid: String)
                         .fillMaxSize()
                         .padding(top = 5.dp, bottom = 5.dp, start = 16.dp, end = 16.dp),
                         content = {
-                            item {
-                                BarraBusquedaKeyStore(
-                                    busqueda = "",
-                                    alCambiarValor = {},
-                                    alBuscar = {},
-                                    estaBuscando = false,
-                                    alCambiarDispo = {},
-                                    placeholder = {
-                                        Text(
-                                            text = "Buscar...",
-                                            color = colorResource(id = R.color.azul_KeyStore)
-                                        )
-                                    },
-                                    trailingIcon = {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Search,
-                                            contentDescription = "buscar",
-                                            tint = colorResource(id = R.color.azul_KeyStore),
-                                            modifier = Modifier.size(30.dp)
-                                        )
-                                    }
-                                )
-                            }
                             items(datosPrivados.size) { indice ->
                                 TarjetaDatosKeyStore(datosPrivados[indice].titulo, datosPrivados[indice].nota, funcionTarjeta = {
                                     navController.navigate(Vistas.PerfilDato.ruta + "?id=" + datosPrivados[indice]._id + "&uid=" + uid)

@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.keystore_hugolopezfernandez.viewmodel.ColeccionVM
+import com.example.keystore_hugolopezfernandez.viewmodel.ConfiguracionPerfilVM
 import com.example.keystore_hugolopezfernandez.viewmodel.CrearContraVM
 import com.example.keystore_hugolopezfernandez.viewmodel.CrearTarjetaVM
 import com.example.keystore_hugolopezfernandez.vista.pantallas.coleccion.Coleccion
@@ -15,6 +16,7 @@ import com.example.keystore_hugolopezfernandez.vista.pantallas.inicio.Inicio
 import com.example.keystore_hugolopezfernandez.viewmodel.InicioVM
 import com.example.keystore_hugolopezfernandez.viewmodel.PerfilDatoVM
 import com.example.keystore_hugolopezfernandez.viewmodel.RegistroVM
+import com.example.keystore_hugolopezfernandez.vista.pantallas.confPerfil.ConfiguracionPerfil
 import com.example.keystore_hugolopezfernandez.vista.pantallas.crearContra.CrearTarjeta
 import com.example.keystore_hugolopezfernandez.vista.pantallas.perfilDato.PerfilDato
 import com.example.keystore_hugolopezfernandez.vista.pantallas.registro.Registro
@@ -45,6 +47,21 @@ fun SistemaNav() {
                 ?.let { uid ->
                     Coleccion(
                         viewModel = ColeccionVM(),
+                        navController = navController,
+                        uid = uid
+                    )
+                }
+        }
+        composable(
+            route = "${Vistas.ConfiguracionPerfil.ruta}?uid={uid}",
+            arguments = listOf(navArgument(name = "uid") {
+                type = NavType.StringType
+            })
+        ) {
+            it.arguments?.getString("uid")
+                ?.let { uid ->
+                    ConfiguracionPerfil(
+                        viewModel = ConfiguracionPerfilVM(),
                         navController = navController,
                         uid = uid
                     )

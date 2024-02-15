@@ -39,6 +39,7 @@ import com.example.keystore_hugolopezfernandez.R
 import com.example.keystore_hugolopezfernandez.navegacion.Vistas
 import com.example.keystore_hugolopezfernandez.viewmodel.InicioVM
 import com.example.keystore_hugolopezfernandez.vista.componentes.BotonTonalKeyStore
+import com.example.keystore_hugolopezfernandez.vista.componentes.DialogoEliminacionKeyStore
 import com.example.keystore_hugolopezfernandez.vista.componentes.InputDelineadoKeystore
 
 @Composable
@@ -59,7 +60,9 @@ fun Inicio(navController: NavController, viewModel: InicioVM) {
                     modifier = Modifier
                         .size(380.dp))
                 LinearProgressIndicator(
-                    modifier = Modifier.padding(10.dp).height(15.dp),
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .height(15.dp),
                     color = colorResource(id = R.color.azul_KeyStore),
                     trackColor = colorResource(id = R.color.azul_claro_KeyStore)
                 )
@@ -111,7 +114,9 @@ fun Inicio(navController: NavController, viewModel: InicioVM) {
                             style = MaterialTheme.typography.headlineLarge,
                             fontFamily = FontFamily.Serif,
                             color = colorResource(id = R.color.negro_KeyStore),
-                            modifier = Modifier.padding(8.dp, 5.dp, 8.dp, 5.dp).fillMaxWidth()
+                            modifier = Modifier
+                                .padding(8.dp, 5.dp, 8.dp, 5.dp)
+                                .fillMaxWidth()
                         )
                         Text(
                             text = "Inicia sesión:",
@@ -146,15 +151,20 @@ fun Inicio(navController: NavController, viewModel: InicioVM) {
                             horizontalArrangement = Arrangement.End
                         ) {
                             Text(
-                                text = "¿Olvidaste la contraseña?",
+                                text = "¿Crear cuenta?",
                                 fontWeight = FontWeight.Bold,
                                 style = TextStyle(
                                     textDecoration = TextDecoration.Underline
                                 ),
                                 fontFamily = FontFamily.Serif,
                                 color = colorResource(id = R.color.azul_KeyStore),
-                                modifier = Modifier.padding(top = 5.dp, bottom = 5.dp, end = 8.dp).clickable { navController.navigate(
-                                    Vistas.Registro.ruta) }
+                                modifier = Modifier
+                                    .padding(top = 5.dp, bottom = 5.dp, end = 8.dp)
+                                    .clickable {
+                                        navController.navigate(
+                                            Vistas.Registro.ruta
+                                        )
+                                    }
                             )
                         }
                         BotonTonalKeyStore(
